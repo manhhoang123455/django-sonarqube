@@ -1,12 +1,10 @@
 name: Build
-
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
-
 jobs:
   sonarqube:
     name: SonarQube
@@ -18,11 +16,11 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python }}
-      - name: Install tox and any other packages
+          python-version: "3.8"
+      - name: Install dependencies
         run: pip install tox
-      - name: Run tox
-        run: tox -e py
+      - name: Run tests and coverage
+        run: tox -e py38
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:
